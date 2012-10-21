@@ -51,7 +51,7 @@
                 <module>firealarm.lamp</module>
                 <module>firealarm.sprinkler</module>
                 <module>firealarm.fog.sensor</module>
-                <module>firealarm.tempearature.sensor</module>
+                <module>firealarm.temperature.sensor</module>
             </modules>
             <build>
                 <plugins>
