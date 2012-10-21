@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * @author dpishchukhin
  */
-public class RoomComponentTest {
+public class MockRoomComponentTest {
     @Test
     public void testExtinguish() throws Exception {
         // TODO

@@ -14,8 +14,8 @@ import org.slf4j.LoggerFactory;
  * @author dpishchukhin
  */
 @Properties({
-        @Property(name = Constants.ROOM_ID, label = "Room ID", description = "Room ID"),
-        @Property(name = Constants.DESCRIPTION, label = "Appliance Description", description = "Appliance Description")
+        @Property(name = Constants.ROOM_ID_PROP, label = "Room ID", description = "Room ID"),
+        @Property(name = Constants.DESCRIPTION_PROP, label = "Appliance Description", description = "Appliance Description")
 })
 @Reference(name = AbstractFireAppliance.ROOM_REFERENCE_NAME, referenceInterface = RoomEnvironment.class,
         cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, policy = ReferencePolicy.DYNAMIC, strategy = ReferenceStrategy.LOOKUP)
@@ -44,7 +44,7 @@ public abstract class AbstractFireAppliance implements FireAppliance {
 
     protected RoomEnvironment getRoom() {
         try {
-            ServiceReference[] serviceReferences = ctx.getBundleContext().getServiceReferences(RoomEnvironment.class.getName(), String.format("(%s=%s)", Constants.ROOM_ID, (String) ctx.getProperties().get(Constants.ROOM_ID)));
+            ServiceReference[] serviceReferences = ctx.getBundleContext().getServiceReferences(RoomEnvironment.class.getName(), String.format("(%s=%s)", Constants.ROOM_ID_PROP, (String) ctx.getProperties().get(Constants.ROOM_ID_PROP)));
             if (serviceReferences != null && serviceReferences.length == 1) {
                 return (RoomEnvironment) ctx.locateService(ROOM_REFERENCE_NAME, serviceReferences[0]);
             }

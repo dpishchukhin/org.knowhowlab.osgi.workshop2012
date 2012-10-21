@@ -11,9 +11,9 @@
     </parent>
 
     <groupId>org.knowhowlab.osgi.workshop2012</groupId>
-    <artifactId>firealarm.sprinkler</artifactId>
+    <artifactId>firealarm.fog.sensor</artifactId>
     <packaging>bundle</packaging>
-    <name>Fire Alarm - Sprinkler Component</name>
+    <name>Fire Alarm - Fog Sensor Component</name>
 
     <dependencies>
         <dependency>
@@ -24,12 +24,6 @@
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.scr.annotations</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>

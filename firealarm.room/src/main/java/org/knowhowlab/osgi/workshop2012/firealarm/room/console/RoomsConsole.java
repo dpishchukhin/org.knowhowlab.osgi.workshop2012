@@ -54,10 +54,10 @@ public class RoomsConsole {
     }
 
     protected void bindRoom(RoomEnvironment env, Map<String, Object> props) {
-        rooms.put((String) props.get(Constants.ROOM_ID), env);
+        rooms.put((String) props.get(Constants.ROOM_ID_PROP), env);
     }
 
     protected void unbindRoom(RoomEnvironment env, Map<String, Object> props) {
-        rooms.remove(props.get(Constants.ROOM_ID));
+        rooms.remove(props.get(Constants.ROOM_ID_PROP));
     }
 }

@@ -50,6 +50,8 @@
                 <module>firealarm.room</module>
                 <module>firealarm.lamp</module>
                 <module>firealarm.sprinkler</module>
+                <module>firealarm.fog.sensor</module>
+                <module>firealarm.tempearature.sensor</module>
             </modules>
             <build>
                 <plugins>
@@ -120,6 +122,8 @@
                                 <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room/${project.version}@1</param>
                                 <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.lamp/${project.version}@1</param>
                                 <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.sprinkler/${project.version}@1</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.fog.sensor/${project.version}@1</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.temperature.sensor/${project.version}@1</param>
                             </provision>
                         </configuration>
                     </plugin>
