@@ -2,7 +2,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
-
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
@@ -12,17 +11,21 @@
     </parent>
 
     <groupId>org.knowhowlab.osgi.workshop2012</groupId>
-    <artifactId>firealarm.api</artifactId>
+    <artifactId>firealarm.lamp</artifactId>
     <packaging>bundle</packaging>
-    <name>Fire Alarm - API</name>
+    <name>Fire Alarm - Notification Lamp Component</name>
 
     <dependencies>
+        <dependency>
+            <groupId>org.knowhowlab.osgi.workshop2012</groupId>
+            <artifactId>firealarm.api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.scr.annotations</artifactId>
         </dependency>
     </dependencies>
-
     <build>
         <plugins>
             <plugin>
@@ -30,13 +33,10 @@
                 <artifactId>maven-bundle-plugin</artifactId>
                 <configuration>
                     <instructions>
-                        <Export-Package>
-                            org.knowhowlab.osgi.workshop2012.firealarm.api*
-                        </Export-Package>
                         <Import-Package>
-                            org.slf4j*,
-                            org.osgi*
+                            org.knowhowlab.osgi.workshop2012.firealarm.api*
                         </Import-Package>
+                        <Expport-Package/>
                     </instructions>
                 </configuration>
             </plugin>

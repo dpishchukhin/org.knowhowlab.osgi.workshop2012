@@ -12,7 +12,8 @@ import org.knowhowlab.osgi.workshop2012.firealarm.room.internal.EnvironmentManip
         metatype = true, configurationFactory = true, policy = ConfigurationPolicy.REQUIRE, immediate = true)
 @Service(EnvironmentStatus.class)
 @Properties({
-        @Property(name = Constants.ROOM_ID, label = "Room ID", description = "Room ID")
+        @Property(name = Constants.ROOM_ID, label = "Room ID", description = "Room ID"),
+        @Property(name = Constants.DESCRIPTION, label = "Room Description", description = "Room Description")
 })
 public class RoomComponent implements EnvironmentManipulator {
     private boolean fog;

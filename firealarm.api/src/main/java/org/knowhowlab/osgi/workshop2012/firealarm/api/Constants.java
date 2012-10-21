@@ -5,4 +5,5 @@ package org.knowhowlab.osgi.workshop2012.firealarm.api;
  */
 public class Constants {
     public static final String ROOM_ID = "room.id";
+    public static final String DESCRIPTION = "description";
 }
