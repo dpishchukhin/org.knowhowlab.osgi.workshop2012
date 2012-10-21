@@ -134,6 +134,79 @@
                 </plugins>
             </build>
         </profile>
+        <profile>
+            <id>build-artifact</id>
+            <properties>
+                <osgi.framework>felix</osgi.framework>
+            </properties>
+            <build>
+                <defaultGoal>package</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <artifactId>maven-antrun-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>run</goal>
+                                </goals>
+                                <phase>package</phase>
+                                <configuration>
+                                    <target>
+                                        <delete dir="firealarm-runtime-${osgi.framework}" quiet="true"/>
+                                        <delete file="paxrunner-firealarm-runtime-${osgi.framework}.zip" quiet="true"/>
+                                        <mkdir dir="firealarm-runtime-${osgi.framework}"/>
+                                        <mkdir dir="firealarm-runtime-${osgi.framework}/config"/>
+                                        <copy todir="firealarm-runtime-${osgi.framework}/config">
+                                            <fileset dir="firealarm.config">
+                                                <include name="**/*.*"/>
+                                            </fileset>
+                                        </copy>
+                                    </target>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.ops4j</groupId>
+                        <artifactId>maven-pax-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>provision</goal>
+                                </goals>
+                                <phase>package</phase>
+                                <configuration>
+                                    <provision>
+                                        <param>--log=error</param>
+                                        <param>
+                                            <![CDATA[
+                                            --vmOptions=-Dlogback.configurationFile=./config/logback.xml -Dfelix.fileinstall.dir=./config
+                                            ]]>
+                                        </param>
+
+                                        <param>--platform=${osgi.framework}</param>
+                                        <param>--executor=zip</param>
+                                        <param>--workingDirectory=firealarm-runtime-${osgi.framework}</param>
+
+                                        <param>--systemPackages=javax.xml.ws.wsaddressing</param>
+
+                                        <param>--definitionURL=file:platform-firealarm-${osgi.framework}.xml</param>
+
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.api/${project.version}@1</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room/${project.version}@1</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.lamp/${project.version}@1</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.sprinkler/${project.version}@1</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.fog.sensor/${project.version}@1</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.temperature.sensor/${project.version}@1</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.core/${project.version}@1</param>
+                                    </provision>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
     </profiles>
 
     <dependencyManagement>

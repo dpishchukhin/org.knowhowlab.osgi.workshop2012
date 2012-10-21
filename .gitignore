@@ -19,6 +19,10 @@ local.properties
 *.iml
 target
 runner
+firealarm-runtime-equinox
+firealarm-runtime-felix
+paxrunner-firealarm-runtime-equinox.zip
+paxrunner-firealarm-runtime-felix.zip
 
 # External tool builders
 .externalToolBuilders/
