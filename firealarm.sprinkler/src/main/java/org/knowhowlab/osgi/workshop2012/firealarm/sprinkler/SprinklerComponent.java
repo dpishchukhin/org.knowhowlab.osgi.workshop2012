@@ -37,12 +37,12 @@ public class SprinklerComponent extends AbstractFireAppliance implements ActionA
     }
 
     @Override
-    public void activate() {
+    public void activateAppliance() {
         activated = true;
     }
 
     @Override
-    public void deactivate() {
+    public void deactivateAppliance() {
         activated = false;
     }
 

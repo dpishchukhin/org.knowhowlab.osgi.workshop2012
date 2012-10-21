@@ -52,6 +52,7 @@
                 <module>firealarm.sprinkler</module>
                 <module>firealarm.fog.sensor</module>
                 <module>firealarm.temperature.sensor</module>
+                <module>firealarm.core</module>
             </modules>
             <build>
                 <plugins>
@@ -96,6 +97,9 @@
         </profile>
         <profile>
             <id>run</id>
+            <properties>
+                <osgi.framework>felix</osgi.framework>
+            </properties>
             <build>
                 <defaultGoal>pax:provision</defaultGoal>
                 <plugins>
@@ -105,16 +109,15 @@
                         <configuration>
                             <provision>
                                 <param>--log=error</param>
-                                <!--
-                                                                <param>-vmOptions=-Dorg.osgi.service.http.port=8081 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</param> -Dlogback.configurationFile=./conf/logback.xml
-                                -->
+                                <param>--console=true</param>
+                                <param>--platform=${osgi.framework}</param>
                                 <param>
                                     <![CDATA[
                                     --vmOptions=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -Dlogback.configurationFile=../firealarm.config/logback.xml -Dfelix.fileinstall.dir=../firealarm.config
                                     ]]>
                                 </param>
 
-                                <param>--definitionURL=file:platform-firealarm-felix.xml</param>
+                                <param>--definitionURL=file:platform-firealarm-${osgi.framework}.xml</param>
 
                                 <param>--systemPackages=javax.xml.ws.wsaddressing</param>
 
@@ -124,6 +127,7 @@
                                 <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.sprinkler/${project.version}@1</param>
                                 <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.fog.sensor/${project.version}@1</param>
                                 <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.temperature.sensor/${project.version}@1</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.core/${project.version}@1</param>
                             </provision>
                         </configuration>
                     </plugin>

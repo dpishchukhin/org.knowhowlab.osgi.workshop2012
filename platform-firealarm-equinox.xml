@@ -1,31 +1,31 @@
 <platform>
 
-    <name>Fire Alarm Felix</name>
-    <system>mvn:org.apache.felix/org.apache.felix.main/4.0.3</system>
-
-    <packages>
-        org.osgi.framework; version=1.6.0,
-        org.osgi.framework.launch; version=1.0.0,
-        org.osgi.framework.wiring; version=1.0.0,
-        org.osgi.framework.startlevel; version=1.0.0,
-        org.osgi.framework.hooks.bundle; version=1.0.0,
-        org.osgi.framework.hooks.resolver; version=1.0.0,
-        org.osgi.framework.hooks.service; version=1.1.0,
-        org.osgi.framework.hooks.weaving; version=1.0.0,
-        org.osgi.service.packageadmin; version=1.2.0,
-        org.osgi.service.startlevel; version=1.1.0,
-        org.osgi.service.url; version=1.0.0,
-        org.osgi.util.tracker;version=1.5.0
-    </packages>
+    <name>Fire Alarm Equinox</name>
+    <system>mvn:org.eclipse.tycho/org.eclipse.osgi/3.8.1.v20120830-144521</system>
 
     <profile name="minimal" default="true">
+<!--
         <bundle>
             <name>Fire Alarm Dependency</name>
-            <url>mvn:org.osgi/org.osgi.core/4.2.0</url>
+            <url>mvn:org.osgi/org.osgi.core/4.2.0@1</url>
         </bundle>
         <bundle>
             <name>Fire Alarm Dependency</name>
-            <url>mvn:org.osgi/org.osgi.compendium/4.2.0</url>
+            <url>mvn:org.osgi/org.osgi.compendium/4.2.0@1</url>
+        </bundle>
+-->
+
+        <bundle>
+            <name>Apache Felix Gogo Command (0.12.0)</name>
+            <url>link:classpath:runner-links/org.apache.felix.gogo.command-0.12.0.link</url>
+        </bundle>
+        <bundle>
+            <name>Apache Felix Gogo Runtime (0.10.0)</name>
+            <url>link:classpath:runner-links/org.apache.felix.gogo.runtime-0.10.0.link</url>
+        </bundle>
+        <bundle>
+            <name>Apache Felix Gogo Shell (0.10.0)</name>
+            <url>link:classpath:runner-links/org.apache.felix.gogo.shell-0.10.0.link</url>
         </bundle>
 
         <bundle>
@@ -51,23 +51,39 @@
 
         <bundle>
             <name>Fire Alarm Dependency</name>
-            <url>mvn:org.apache.felix/org.apache.felix.log/1.0.1</url>
+            <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8.1-201209141800/org.eclipse.equinox.console_1.0.0.v20120522-1841.jar</url>
         </bundle>
         <bundle>
             <name>Fire Alarm Dependency</name>
-            <url>mvn:org.apache.felix/org.apache.felix.configadmin/1.4.0</url>
+            <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8.1-201209141800/org.eclipse.osgi.util_3.2.300.v20120522-1822.jar</url>
         </bundle>
         <bundle>
             <name>Fire Alarm Dependency</name>
-            <url>mvn:org.apache.felix/org.apache.felix.metatype/1.0.4</url>
+            <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8.1-201209141800/org.eclipse.equinox.util_1.0.400.v20120522-2049.jar</url>
         </bundle>
         <bundle>
             <name>Fire Alarm Dependency</name>
-            <url>mvn:org.apache.felix/org.apache.felix.scr/1.6.0</url>
+            <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8.1-201209141800/org.eclipse.osgi.services_3.3.100.v20120522-1822.jar</url>
         </bundle>
         <bundle>
             <name>Fire Alarm Dependency</name>
-            <url>mvn:org.apache.felix/org.apache.felix.eventadmin/1.3.2</url>
+            <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8.1-201209141800/org.eclipse.equinox.log_1.2.300.v20120522-2049.jar</url>
+        </bundle>
+        <bundle>
+            <name>Fire Alarm Dependency</name>
+            <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8.1-201209141800/org.eclipse.equinox.cm_1.0.400.v20120522-1841.jar</url>
+        </bundle>
+        <bundle>
+            <name>Fire Alarm Dependency</name>
+            <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8.1-201209141800/org.eclipse.equinox.metatype_1.2.0.v20120522-1841.jar</url>
+        </bundle>
+        <bundle>
+            <name>Fire Alarm Dependency</name>
+            <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8.1-201209141800/org.eclipse.equinox.ds_1.4.0.v20120522-1841.jar</url>
+        </bundle>
+        <bundle>
+            <name>Fire Alarm Dependency</name>
+            <url>http://ftp-stud.fht-esslingen.de/pub/Mirrors/eclipse/equinox/drops/R-3.8.1-201209141800/org.eclipse.equinox.event_1.2.200.v20120522-2049.jar</url>
         </bundle>
 
         <bundle>
@@ -127,20 +143,4 @@
             <url>mvn:org.apache.felix/org.apache.felix.webconsole.plugins.packageadmin/1.0.0</url>
         </bundle>
     </profile>
-
-    <profile name="tui" extends="minimal">
-        <bundle>
-            <name>Apache Felix Gogo Command (0.12.0)</name>
-            <url>link:classpath:runner-links/org.apache.felix.gogo.command-0.12.0.link</url>
-        </bundle>
-        <bundle>
-            <name>Apache Felix Gogo Runtime (0.10.0)</name>
-            <url>link:classpath:runner-links/org.apache.felix.gogo.runtime-0.10.0.link</url>
-        </bundle>
-        <bundle>
-            <name>Apache Felix Gogo Shell (0.10.0)</name>
-            <url>link:classpath:runner-links/org.apache.felix.gogo.shell-0.10.0.link</url>
-        </bundle>
-    </profile>
-
 </platform>

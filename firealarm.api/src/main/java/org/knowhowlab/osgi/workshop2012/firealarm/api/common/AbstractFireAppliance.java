@@ -46,7 +46,8 @@ public abstract class AbstractFireAppliance implements FireAppliance {
         try {
             ServiceReference[] serviceReferences = ctx.getBundleContext().getServiceReferences(RoomEnvironment.class.getName(), String.format("(%s=%s)", Constants.ROOM_ID_PROP, (String) ctx.getProperties().get(Constants.ROOM_ID_PROP)));
             if (serviceReferences != null && serviceReferences.length == 1) {
-                return (RoomEnvironment) ctx.locateService(ROOM_REFERENCE_NAME, serviceReferences[0]);
+                // return (RoomEnvironment) ctx.locateService(ROOM_REFERENCE_NAME, serviceReferences[0]);
+                return (RoomEnvironment) ctx.getBundleContext().getService(serviceReferences[0]);
             }
         } catch (InvalidSyntaxException e) {
             LOG.warn("Invalid filter", e);

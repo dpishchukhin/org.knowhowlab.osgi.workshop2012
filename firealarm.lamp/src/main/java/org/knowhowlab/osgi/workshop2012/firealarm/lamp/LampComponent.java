@@ -18,12 +18,12 @@ import org.knowhowlab.osgi.workshop2012.firealarm.api.common.AbstractFireApplian
 @Property(name = Constants.GLOBAL_PROP, label = "Global Notification", description = "Global Notification", value = "false")
 public class LampComponent extends AbstractFireAppliance implements ActionAppliance {
     @Override
-    public void activate() {
+    public void activateAppliance() {
         activated = true;
     }
 
     @Override
-    public void deactivate() {
+    public void deactivateAppliance() {
         activated = false;
     }
 }
