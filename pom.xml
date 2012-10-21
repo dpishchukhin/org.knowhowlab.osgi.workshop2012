@@ -47,6 +47,7 @@
             </activation>
             <modules>
                 <module>firealarm.api</module>
+                <module>firealarm.room</module>
             </modules>
             <build>
                 <plugins>
@@ -85,6 +86,38 @@
                                 </goals>
                             </execution>
                         </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+        <profile>
+            <id>run</id>
+            <build>
+                <defaultGoal>pax:provision</defaultGoal>
+                <plugins>
+                    <plugin>
+                        <groupId>org.ops4j</groupId>
+                        <artifactId>maven-pax-plugin</artifactId>
+                        <configuration>
+                            <provision>
+                                <param>--log=error</param>
+                                <!--
+                                                                <param>-vmOptions=-Dorg.osgi.service.http.port=8081 -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005</param> -Dlogback.configurationFile=./conf/logback.xml
+                                -->
+                                <param>
+                                    <![CDATA[
+                                    --vmOptions=-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005 -Dlogback.configurationFile=../firealarm.config/logback.xml -Dfelix.fileinstall.dir=../firealarm.config
+                                    ]]>
+                                </param>
+
+                                <param>--definitionURL=file:platform-firealarm-felix.xml</param>
+
+                                <param>--systemPackages=javax.xml.ws.wsaddressing</param>
+
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.api/${project.version}@1</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room/${project.version}@1</param>
+                            </provision>
+                        </configuration>
                     </plugin>
                 </plugins>
             </build>
@@ -128,6 +161,17 @@
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
                 <version>1.0.6</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.scr.annotations</artifactId>
+                <version>1.7.0</version>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>org.apache.felix.gogo.runtime</artifactId>
+                <version>0.10.0</version>
             </dependency>
 
             <!-- Test dependencies -->
