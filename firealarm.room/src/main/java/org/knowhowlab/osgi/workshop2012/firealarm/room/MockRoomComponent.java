@@ -19,7 +19,7 @@ public class MockRoomComponent implements RoomEnvironmentManipulator {
     public static final int MINIMUM_TEMP = 20;
 
     private boolean fog;
-    private float actualTemperature;
+    private float actualTemperature = MINIMUM_TEMP;
 
     @Override
     public boolean hasFog() {
