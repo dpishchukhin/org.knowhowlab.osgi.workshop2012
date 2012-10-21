@@ -14,19 +14,13 @@ import org.knowhowlab.osgi.workshop2012.firealarm.api.common.AbstractFireApplian
         metatype = true, configurationFactory = true, policy = ConfigurationPolicy.REQUIRE, immediate = true)
 @Service({FireAppliance.class, ActionAppliance.class})
 public class LampComponent extends AbstractFireAppliance implements ActionAppliance {
-    private boolean active;
-    @Override
-    public boolean isActivated() {
-        return active;
-    }
-
     @Override
     public void activate() {
-        active = true;
+        activated = true;
     }
 
     @Override
     public void deactivate() {
-        active = false;
+        activated = false;
     }
 }

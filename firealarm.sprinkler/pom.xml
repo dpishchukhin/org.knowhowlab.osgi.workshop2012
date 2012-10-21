@@ -11,9 +11,9 @@
     </parent>
 
     <groupId>org.knowhowlab.osgi.workshop2012</groupId>
-    <artifactId>firealarm.room</artifactId>
+    <artifactId>firealarm.sprinkler</artifactId>
     <packaging>bundle</packaging>
-    <name>Fire Alarm - Room Component</name>
+    <name>Fire Alarm - Sprinkler Component</name>
 
     <dependencies>
         <dependency>
@@ -23,17 +23,7 @@
         </dependency>
         <dependency>
             <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.gogo.runtime</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.scr.annotations</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -44,8 +34,8 @@
                 <configuration>
                     <instructions>
                         <Import-Package>
-                            org.knowhowlab.osgi.workshop2012.firealarm.api*,
-                            org.apache.felix.service.command*
+                            org.osgi*,
+                            org.knowhowlab.osgi.workshop2012.firealarm.api*
                         </Import-Package>
                         <Expport-Package/>
                     </instructions>

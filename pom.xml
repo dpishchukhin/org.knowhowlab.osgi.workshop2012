@@ -49,6 +49,7 @@
                 <module>firealarm.api</module>
                 <module>firealarm.room</module>
                 <module>firealarm.lamp</module>
+                <module>firealarm.sprinkler</module>
             </modules>
             <build>
                 <plugins>
@@ -118,6 +119,7 @@
                                 <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.api/${project.version}@1</param>
                                 <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room/${project.version}@1</param>
                                 <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.lamp/${project.version}@1</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.sprinkler/${project.version}@1</param>
                             </provision>
                         </configuration>
                     </plugin>

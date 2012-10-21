@@ -5,8 +5,8 @@ import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.Descriptor;
 import org.apache.felix.service.command.Parameter;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.Constants;
-import org.knowhowlab.osgi.workshop2012.firealarm.api.environment.EnvironmentStatus;
-import org.knowhowlab.osgi.workshop2012.firealarm.room.internal.EnvironmentManipulator;
+import org.knowhowlab.osgi.workshop2012.firealarm.api.environment.RoomEnvironment;
+import org.knowhowlab.osgi.workshop2012.firealarm.room.internal.RoomEnvironmentManipulator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,15 +21,15 @@ import java.util.Map;
         @Property(name = CommandProcessor.COMMAND_FUNCTION, value = {"lr", "chroom"})
 })
 public class RoomsConsole {
-    @Reference(referenceInterface = EnvironmentStatus.class,
+    @Reference(referenceInterface = RoomEnvironment.class,
             cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, policy = ReferencePolicy.DYNAMIC,
             bind = "bindRoom", unbind = "unbindRoom")
-    private Map<String, EnvironmentStatus> rooms = new HashMap<String, EnvironmentStatus>();
+    private Map<String, RoomEnvironment> rooms = new HashMap<String, RoomEnvironment>();
 
     @Descriptor("list all rooms")
     public void lr() {
         for (String roomId : rooms.keySet()) {
-            EnvironmentStatus env = rooms.get(roomId);
+            RoomEnvironment env = rooms.get(roomId);
             System.out.println(String.format("Room %s - fog: %s, temp: %sC", roomId, env.hasFog(), env.getCurrentTemperature()));
         }
     }
@@ -40,24 +40,24 @@ public class RoomsConsole {
             @Descriptor("activate fog") @Parameter(names = {"-f", "--fog"}, presentValue = "true", absentValue = Parameter.UNSPECIFIED) boolean fog,
             @Descriptor("activate fog") @Parameter(names = {"-t", "--temp"}, absentValue = Parameter.UNSPECIFIED) float temp
     ) {
-        EnvironmentStatus room = rooms.get(roomId);
+        RoomEnvironment room = rooms.get(roomId);
         if (room == null) {
             System.out.println("Unknown room ID: " + roomId);
-        } else if (!(room instanceof EnvironmentManipulator)) {
+        } else if (!(room instanceof RoomEnvironmentManipulator)) {
             System.out.println("Unable change env for room ID: " + roomId);
         } else {
-            EnvironmentManipulator manipulator = (EnvironmentManipulator) room;
+            RoomEnvironmentManipulator manipulator = (RoomEnvironmentManipulator) room;
             manipulator.activateFog(fog);
             manipulator.setActualTemperature(temp);
             System.out.println("Env changed for room ID: " + roomId);
         }
     }
 
-    protected void bindRoom(EnvironmentStatus env, Map<String, Object> props) {
+    protected void bindRoom(RoomEnvironment env, Map<String, Object> props) {
         rooms.put((String) props.get(Constants.ROOM_ID), env);
     }
 
-    protected void unbindRoom(EnvironmentStatus env, Map<String, Object> props) {
+    protected void unbindRoom(RoomEnvironment env, Map<String, Object> props) {
         rooms.remove(props.get(Constants.ROOM_ID));
     }
 }
