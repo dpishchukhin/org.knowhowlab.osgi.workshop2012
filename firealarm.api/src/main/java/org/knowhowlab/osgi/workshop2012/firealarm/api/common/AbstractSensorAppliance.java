@@ -5,6 +5,7 @@ import org.apache.felix.scr.annotations.ReferenceCardinality;
 import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.apache.felix.scr.annotations.ReferenceStrategy;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.Constants;
+import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventAdmin;
 
@@ -34,6 +35,7 @@ public abstract class AbstractSensorAppliance extends AbstractFireAppliance {
     private Event createAlarmEvent(boolean active, String details) {
         Map props = new HashMap();
         props.put(Constants.ROOM_ID_PROP, ctx.getProperties().get(Constants.ROOM_ID_PROP));
+        props.put(Constants.SENSOR_ID_PROP, String.valueOf(ctx.getProperties().get(ComponentConstants.COMPONENT_ID)));
         props.put(Constants.DESCRIPTION_PROP, ctx.getProperties().get(Constants.DESCRIPTION_PROP));
         if (details != null) {
             props.put(Constants.DETAILS_PROP, details);

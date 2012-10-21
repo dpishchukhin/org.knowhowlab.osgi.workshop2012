@@ -3,6 +3,7 @@ package org.knowhowlab.osgi.workshop2012.firealarm.core;
 import org.apache.felix.scr.annotations.*;
 import org.apache.felix.service.command.CommandProcessor;
 import org.apache.felix.service.command.Descriptor;
+import org.knowhowlab.osgi.workshop2012.firealarm.api.ActionAppliance;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.Constants;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.FireAppliance;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.environment.RoomEnvironment;
@@ -29,7 +30,7 @@ import java.util.Map;
         @Property(name = CommandProcessor.COMMAND_SCOPE, value = "firealarm"),
         @Property(name = CommandProcessor.COMMAND_FUNCTION, value = {"status"})
 })
-public class CoreComponent implements EventHandler {
+public class CoreComponent extends AlarmSystemStateMachine implements EventHandler {
     private static final Logger LOG = LoggerFactory.getLogger(CoreComponent.class);
 
     @Reference(referenceInterface = RoomEnvironment.class,
@@ -51,7 +52,64 @@ public class CoreComponent implements EventHandler {
 
     @Override
     public void handleEvent(Event event) {
-        System.out.println(event);
+        AlarmSystemFeedback feedback = handleAlarmEvent((String)event.getProperty(Constants.ROOM_ID_PROP),
+                (String)event.getProperty(Constants.SENSOR_ID_PROP),
+                (Boolean)event.getProperty(Constants.ACTIVE_ALARM));
+        processSystemFeedback(feedback);
+    }
+
+    private void processSystemFeedback(AlarmSystemFeedback feedback) {
+        changeGlobalActionAppliancesState(feedback.isActivateGlobal());
+        for (String roomId : feedback.getActiveAlarmRooms()) {
+            changeRoomActionAppliancesState(roomId, true);
+        }
+        for (String roomId : feedback.getInactiveAlarmRooms()) {
+            changeRoomActionAppliancesState(roomId, false);
+        }
+    }
+
+    private void changeRoomActionAppliancesState(String roomId, boolean activate) {
+        try {
+            ServiceReference[] serviceReferences = ctx.getBundleContext().getServiceReferences(ActionAppliance.class.getName(), String.format("(&(!(%s=%s))(%s=%s))", Constants.GLOBAL_PROP, "true", Constants.ROOM_ID_PROP, roomId));
+            if (serviceReferences != null) {
+                for (ServiceReference serviceReference : serviceReferences) {
+                    try {
+                        ActionAppliance actionAppliance = (ActionAppliance) ctx.getBundleContext().getService(serviceReference);
+                        if (activate) {
+                            actionAppliance.activateAppliance();
+                        } else {
+                            actionAppliance.deactivateAppliance();
+                        }
+                    } finally {
+                        ctx.getBundleContext().ungetService(serviceReference);
+                    }
+                }
+            }
+        } catch (InvalidSyntaxException e) {
+            LOG.warn("Unable to process", e);
+        }
+    }
+
+    private void changeGlobalActionAppliancesState(boolean activate) {
+        try {
+            ServiceReference[] serviceReferences = ctx.getBundleContext().getServiceReferences(ActionAppliance.class.getName(), String.format("(%s=%s)", Constants.GLOBAL_PROP, "true"));
+            if (serviceReferences != null) {
+                for (ServiceReference serviceReference : serviceReferences) {
+                    try {
+                        ActionAppliance actionAppliance = (ActionAppliance) ctx.getBundleContext().getService(serviceReference);
+                        if (activate) {
+                            actionAppliance.activateAppliance();
+                        } else {
+                            actionAppliance.deactivateAppliance();
+                        }
+                    } finally {
+                        ctx.getBundleContext().ungetService(serviceReference);
+                    }
+                }
+            }
+        } catch (InvalidSyntaxException e) {
+            LOG.warn("Unable to process", e);
+        }
     }
 
     @Descriptor("print fire alarm system status")
