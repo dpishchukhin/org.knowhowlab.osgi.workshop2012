@@ -15,7 +15,7 @@ import org.knowhowlab.osgi.workshop2012.firealarm.room.internal.RoomEnvironmentM
         @Property(name = Constants.ROOM_ID_PROP, label = "Room ID", description = "Room ID"),
         @Property(name = Constants.DESCRIPTION_PROP, label = "Room Description", description = "Room Description")
 })
-public class MockRoomComponent implements RoomEnvironmentManipulator {
+public class RoomComponent implements RoomEnvironmentManipulator {
     public static final float MINIMUM_TEMP = 20;
 
     private boolean fog;

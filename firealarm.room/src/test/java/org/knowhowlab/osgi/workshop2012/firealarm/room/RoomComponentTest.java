@@ -6,10 +6,10 @@ import org.junit.Test;
 /**
  * @author dpishchukhin
  */
-public class MockRoomComponentTest {
+public class RoomComponentTest {
     @Test
     public void testExtinguish() throws Exception {
-        MockRoomComponent component = new MockRoomComponent();
+        RoomComponent component = new RoomComponent();
         component.setActualTemperature(100);
         component.extinguish();
         Assert.assertEquals(99.0, component.getCurrentTemperature(), 0);
@@ -17,11 +17,11 @@ public class MockRoomComponentTest {
 
     @Test
     public void testExtinguish_fog() throws Exception {
-        MockRoomComponent component = new MockRoomComponent();
-        component.setActualTemperature(MockRoomComponent.MINIMUM_TEMP);
+        RoomComponent component = new RoomComponent();
+        component.setActualTemperature(RoomComponent.MINIMUM_TEMP);
         component.activateFog(true);
         component.extinguish();
-        Assert.assertEquals(MockRoomComponent.MINIMUM_TEMP, component.getCurrentTemperature(), 0);
+        Assert.assertEquals(RoomComponent.MINIMUM_TEMP, component.getCurrentTemperature(), 0);
         Assert.assertEquals(false, component.hasFog());
     }
 }

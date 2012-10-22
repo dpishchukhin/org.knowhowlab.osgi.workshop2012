@@ -20,12 +20,20 @@ import java.util.Map;
 public abstract class AbstractSensorAppliance extends AbstractFireAppliance {
     public static final String EVENT_ADMIN_REFERENCE_NAME = "ea.reference";
 
+    /**
+     * Sends alarm activation event
+     *
+     * @param details alarm details
+     */
     protected void activateAlarm(String details) {
         activated = true;
         EventAdmin eventAdmin = (EventAdmin) ctx.locateService(EVENT_ADMIN_REFERENCE_NAME);
         eventAdmin.postEvent(createAlarmEvent(true, details));
     }
 
+    /**
+     * Sends alarm deactivation event
+     */
     protected void deactivateAlarm() {
         activated = false;
         EventAdmin eventAdmin = (EventAdmin) ctx.locateService(EVENT_ADMIN_REFERENCE_NAME);
@@ -33,7 +41,7 @@ public abstract class AbstractSensorAppliance extends AbstractFireAppliance {
     }
 
     private Event createAlarmEvent(boolean active, String details) {
-        Map props = new HashMap();
+        Map<String, Object> props = new HashMap<String, Object>();
         props.put(Constants.ROOM_ID_PROP, ctx.getProperties().get(Constants.ROOM_ID_PROP));
         props.put(Constants.SENSOR_ID_PROP, String.valueOf(ctx.getProperties().get(ComponentConstants.COMPONENT_ID)));
         props.put(Constants.DESCRIPTION_PROP, ctx.getProperties().get(Constants.DESCRIPTION_PROP));

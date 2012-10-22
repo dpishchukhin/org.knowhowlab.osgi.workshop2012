@@ -42,10 +42,16 @@ public abstract class AbstractFireAppliance implements FireAppliance {
         return activated;
     }
 
+    /**
+     * Get room there the applicance is placed
+     *
+     * @return room
+     */
     protected RoomEnvironment getRoom() {
         try {
-            ServiceReference[] serviceReferences = ctx.getBundleContext().getServiceReferences(RoomEnvironment.class.getName(), String.format("(%s=%s)", Constants.ROOM_ID_PROP, (String) ctx.getProperties().get(Constants.ROOM_ID_PROP)));
+            ServiceReference[] serviceReferences = ctx.getBundleContext().getServiceReferences(RoomEnvironment.class.getName(), String.format("(%s=%s)", Constants.ROOM_ID_PROP, ctx.getProperties().get(Constants.ROOM_ID_PROP)));
             if (serviceReferences != null && serviceReferences.length == 1) {
+                // Equinos DS returns null!!!. Felix works fine
                 // return (RoomEnvironment) ctx.locateService(ROOM_REFERENCE_NAME, serviceReferences[0]);
                 return (RoomEnvironment) ctx.getBundleContext().getService(serviceReferences[0]);
             }
