@@ -6,7 +6,7 @@ import org.apache.felix.service.command.Descriptor;
 import org.apache.felix.service.command.Parameter;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.Constants;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.environment.RoomEnvironment;
-import org.knowhowlab.osgi.workshop2012.firealarm.room.internal.RoomEnvironmentManipulator;
+import org.knowhowlab.osgi.workshop2012.firealarm.api.environment.RoomEnvironmentManipulator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,10 +21,10 @@ import java.util.Map;
         @Property(name = CommandProcessor.COMMAND_FUNCTION, value = {"lr", "fire"})
 })
 public class RoomsConsole {
-    @Reference(referenceInterface = RoomEnvironment.class,
+    @Reference(referenceInterface = RoomEnvironmentManipulator.class,
             cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, policy = ReferencePolicy.DYNAMIC,
             bind = "bindRoom", unbind = "unbindRoom")
-    private Map<String, RoomEnvironment> rooms = new HashMap<String, RoomEnvironment>();
+    private Map<String, RoomEnvironmentManipulator> rooms = new HashMap<String, RoomEnvironmentManipulator>();
 
     @Descriptor("list all rooms")
     public void lr() {
@@ -39,24 +39,21 @@ public class RoomsConsole {
             @Descriptor("room id") @Parameter(names = {"-r", "--room"}, absentValue = Parameter.UNSPECIFIED) String roomId,
             @Descriptor("activate fog") @Parameter(names = {"-f", "--fog"}, presentValue = "true", absentValue = Parameter.UNSPECIFIED) boolean fog
     ) {
-        RoomEnvironment room = rooms.get(roomId);
+        RoomEnvironmentManipulator room = rooms.get(roomId);
         if (room == null) {
             System.out.println("Unknown room ID: " + roomId);
-        } else if (!(room instanceof RoomEnvironmentManipulator)) {
-            System.out.println("Unable change env for room ID: " + roomId);
         } else {
-            RoomEnvironmentManipulator manipulator = (RoomEnvironmentManipulator) room;
-            manipulator.activateFog(fog);
-            manipulator.setActualTemperature(100);
+            room.activateFog(fog);
+            room.setActualTemperature(100);
             System.out.println("Env changed for room ID: " + roomId);
         }
     }
 
-    protected void bindRoom(RoomEnvironment env, Map<String, Object> props) {
+    protected void bindRoom(RoomEnvironmentManipulator env, Map<String, Object> props) {
         rooms.put((String) props.get(Constants.ROOM_ID_PROP), env);
     }
 
-    protected void unbindRoom(RoomEnvironment env, Map<String, Object> props) {
+    protected void unbindRoom(RoomEnvironmentManipulator env, Map<String, Object> props) {
         rooms.remove(props.get(Constants.ROOM_ID_PROP));
     }
 }

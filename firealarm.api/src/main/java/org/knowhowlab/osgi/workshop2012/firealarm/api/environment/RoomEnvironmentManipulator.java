@@ -1,6 +1,4 @@
-package org.knowhowlab.osgi.workshop2012.firealarm.room.internal;
-
-import org.knowhowlab.osgi.workshop2012.firealarm.api.environment.RoomEnvironment;
+package org.knowhowlab.osgi.workshop2012.firealarm.api.environment;
 
 /**
  * @author dpishchukhin
