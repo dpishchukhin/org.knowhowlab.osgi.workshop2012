@@ -1,9 +1,8 @@
 package org.knowhowlab.osgi.workshop2012.firealarm.core;
 
 import org.apache.felix.scr.annotations.*;
-import org.apache.felix.service.command.CommandProcessor;
-import org.apache.felix.service.command.Descriptor;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.Constants;
+import org.knowhowlab.osgi.workshop2012.firealarm.core.internal.EnvironmentManager;
 import org.osgi.service.component.ComponentContext;
 import org.osgi.service.event.Event;
 import org.osgi.service.event.EventConstants;
@@ -14,11 +13,9 @@ import org.osgi.service.event.EventHandler;
  */
 @Component(specVersion = "1.1", name = "firealarm.system", label = "Fire Alarm System", description = "Fire Alarm System",
         metatype = true, immediate = true)
-@Service({EventHandler.class, FireAlarmSystemComponent.class})
+@Service(EventHandler.class)
 @Properties({
-        @Property(name = EventConstants.EVENT_TOPIC, value = "firealarm"),
-        @Property(name = CommandProcessor.COMMAND_SCOPE, value = "firealarm"),
-        @Property(name = CommandProcessor.COMMAND_FUNCTION, value = {"status"})
+        @Property(name = EventConstants.EVENT_TOPIC, value = Constants.TOPIC)
 })
 public class FireAlarmSystemComponent extends AlarmSystemStateMachine implements EventHandler {
     private EnvironmentManager environmentManager;
@@ -59,19 +56,6 @@ public class FireAlarmSystemComponent extends AlarmSystemStateMachine implements
     private void changeGlobalActionAppliancesState(boolean activate) {
         for (String applianceId : environmentManager.getGlobalActionApplianceIds()) {
             environmentManager.activateActionAppliance(applianceId, activate);
-        }
-    }
-
-    @Descriptor("print fire alarm system status")
-    public void status() {
-        for (String roomId : environmentManager.roomIds()) {
-            String roomDescription = environmentManager.getRoomDescription(roomId);
-            System.out.println(roomDescription);
-
-            for (String applianceId : environmentManager.getAllFireApplianceIdsByRoomId(roomId)) {
-                System.out.println(String.format("%s - %s", environmentManager.getApplianceDescription(applianceId), environmentManager.isApplianceActivated(applianceId)));
-            }
-            System.out.println("---\n");
         }
     }
 }

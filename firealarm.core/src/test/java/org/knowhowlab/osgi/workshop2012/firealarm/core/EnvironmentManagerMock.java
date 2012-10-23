@@ -1,6 +1,7 @@
 package org.knowhowlab.osgi.workshop2012.firealarm.core;
 
 import org.knowhowlab.osgi.workshop2012.firealarm.api.Constants;
+import org.knowhowlab.osgi.workshop2012.firealarm.core.internal.EnvironmentManager;
 
 import java.util.ArrayList;
 import java.util.List;

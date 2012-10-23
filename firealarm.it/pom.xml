@@ -16,8 +16,24 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.knowhowlab.osgi.workshop2012</groupId>
+            <artifactId>firealarm.api</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.knowhowlab.osgi.testing</groupId>
+            <artifactId>utils</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.knowhowlab.osgi.testing</groupId>
+            <artifactId>assertions</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>

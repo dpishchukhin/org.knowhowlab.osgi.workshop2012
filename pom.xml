@@ -48,11 +48,13 @@
             <modules>
                 <module>firealarm.api</module>
                 <module>firealarm.room</module>
+                <module>firealarm.room.console</module>
                 <module>firealarm.lamp</module>
                 <module>firealarm.sprinkler</module>
                 <module>firealarm.fog.sensor</module>
                 <module>firealarm.temperature.sensor</module>
                 <module>firealarm.core</module>
+                <module>firealarm.core.console</module>
             </modules>
             <build>
                 <plugins>
@@ -127,13 +129,15 @@
 
                                 <param>--systemPackages=javax.xml.ws.wsaddressing</param>
 
-                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.api/${project.version}@1</param>
-                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room/${project.version}@1</param>
-                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.lamp/${project.version}@1</param>
-                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.sprinkler/${project.version}@1</param>
-                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.fog.sensor/${project.version}@1</param>
-                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.temperature.sensor/${project.version}@1</param>
-                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.core/${project.version}@1</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.api/${project.version}</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room/${project.version}</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room.console/${project.version}@nostart</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.lamp/${project.version}</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.sprinkler/${project.version}</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.fog.sensor/${project.version}</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.temperature.sensor/${project.version}</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.core/${project.version}</param>
+                                <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.core.console/${project.version}@nostart</param>
                             </provision>
                         </configuration>
                     </plugin>
@@ -198,13 +202,15 @@
 
                                         <param>--definitionURL=file:platform-firealarm-${osgi.framework}.xml</param>
 
-                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.api/${project.version}@1</param>
-                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room/${project.version}@1</param>
-                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.lamp/${project.version}@1</param>
-                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.sprinkler/${project.version}@1</param>
-                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.fog.sensor/${project.version}@1</param>
-                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.temperature.sensor/${project.version}@1</param>
-                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.core/${project.version}@1</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.api/${project.version}</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room/${project.version}</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.room.console/${project.version}@nostart</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.lamp/${project.version}</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.sprinkler/${project.version}</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.fog.sensor/${project.version}</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.temperature.sensor/${project.version}</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.core/${project.version}</param>
+                                        <param>mvn:org.knowhowlab.osgi.workshop2012/firealarm.core.console/${project.version}@nostart</param>
                                     </provision>
                                 </configuration>
                             </execution>
@@ -270,6 +276,16 @@
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
                 <version>4.10</version>
+            </dependency>
+            <dependency>
+                <groupId>org.knowhowlab.osgi.testing</groupId>
+                <artifactId>utils</artifactId>
+                <version>1.0.0.M2</version>
+            </dependency>
+            <dependency>
+                <groupId>org.knowhowlab.osgi.testing</groupId>
+                <artifactId>assertions</artifactId>
+                <version>1.0.0.M2</version>
             </dependency>
             <dependency>
                 <groupId>org.mockito</groupId>

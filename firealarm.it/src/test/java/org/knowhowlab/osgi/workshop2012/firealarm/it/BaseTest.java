@@ -1,5 +1,7 @@
 package org.knowhowlab.osgi.workshop2012.firealarm.it;
 
+import org.junit.Before;
+import org.knowhowlab.osgi.testing.assertions.OSGiAssert;
 import org.ops4j.pax.exam.Option;
 import org.ops4j.pax.exam.junit.ExamReactorStrategy;
 import org.ops4j.pax.exam.spi.reactors.EagerSingleStagedReactorFactory;
@@ -17,6 +19,11 @@ public class BaseTest {
     @Inject
     protected BundleContext bundleContext;
 
+    @Before
+    public void initAssertions() {
+        OSGiAssert.init(bundleContext);
+    }
+
     public static Option[] baseConfiguration() {
         return options(
                 workingDirectory("target/paxexam/"),
@@ -24,7 +31,18 @@ public class BaseTest {
                 junitBundles(),
 
                 customFramework("felix", "file:" + System.getProperty("root.basedir") + "/platform-firealarm-felix.xml", "felix 4.0.3"),
-                customFramework("equinox", "file:" + System.getProperty("root.basedir") + "/platform-firealarm-equinox-noconsole.xml", "equinox 3.8.1")
+                customFramework("equinox", "file:" + System.getProperty("root.basedir") + "/platform-firealarm-equinox-noconsole.xml", "equinox 3.8.1"),
+
+                mavenBundle("org.knowhowlab.osgi.testing", "utils").versionAsInProject(),
+                mavenBundle("org.knowhowlab.osgi.testing", "assertions").versionAsInProject(),
+
+                mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.api").version(System.getProperty("project.version")),
+                mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.room").version(System.getProperty("project.version")),
+                mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.lamp").version(System.getProperty("project.version")),
+                mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.sprinkler").version(System.getProperty("project.version")),
+                mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.fog.sensor").version(System.getProperty("project.version")),
+                mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.temperature.sensor").version(System.getProperty("project.version")),
+                mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.core").version(System.getProperty("project.version"))
         );
     }
 

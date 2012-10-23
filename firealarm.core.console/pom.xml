@@ -11,9 +11,9 @@
     </parent>
 
     <groupId>org.knowhowlab.osgi.workshop2012</groupId>
-    <artifactId>firealarm.core</artifactId>
+    <artifactId>firealarm.core.console</artifactId>
     <packaging>bundle</packaging>
-    <name>Fire Alarm - Core Component</name>
+    <name>Fire Alarm - Core Console Fragment</name>
 
     <dependencies>
         <dependency>
@@ -22,13 +22,17 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.scr.annotations</artifactId>
+            <groupId>org.knowhowlab.osgi.workshop2012</groupId>
+            <artifactId>firealarm.core</artifactId>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <scope>test</scope>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.gogo.runtime</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.felix</groupId>
+            <artifactId>org.apache.felix.scr.annotations</artifactId>
         </dependency>
     </dependencies>
     <build>
@@ -41,11 +45,19 @@
                         <Import-Package>
                             org.osgi*,
                             org.slf4j*,
-                            org.knowhowlab.osgi.workshop2012.firealarm.api*
+                            org.apache.felix.service.command,
+                            !org.knowhowlab.osgi.workshop2012.firealarm.core.internal*
                         </Import-Package>
                         <Expport-Package/>
-                        <Service-Component>OSGI-INF/*</Service-Component>
+                        <Fragment-Host>org.knowhowlab.osgi.workshop2012.firealarm.core</Fragment-Host>
                     </instructions>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+                <configuration>
+                    <finalName>firealarm.core.console.xml</finalName>
                 </configuration>
             </plugin>
             <plugin>

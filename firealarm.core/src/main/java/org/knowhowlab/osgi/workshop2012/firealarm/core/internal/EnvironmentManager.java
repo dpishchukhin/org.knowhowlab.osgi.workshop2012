@@ -1,4 +1,4 @@
-package org.knowhowlab.osgi.workshop2012.firealarm.core;
+package org.knowhowlab.osgi.workshop2012.firealarm.core.internal;
 
 import org.knowhowlab.osgi.workshop2012.firealarm.api.ActionAppliance;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.Constants;
