@@ -4,11 +4,13 @@ import org.apache.felix.scr.annotations.*;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.Constants;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.FireAppliance;
 import org.knowhowlab.osgi.workshop2012.firealarm.api.environment.RoomEnvironment;
-import org.osgi.framework.InvalidSyntaxException;
-import org.osgi.framework.ServiceReference;
+import org.osgi.service.component.ComponentConstants;
 import org.osgi.service.component.ComponentContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author dpishchukhin
@@ -17,29 +19,53 @@ import org.slf4j.LoggerFactory;
         @Property(name = Constants.ROOM_ID_PROP, label = "Room ID", description = "Room ID"),
         @Property(name = Constants.DESCRIPTION_PROP, label = "Appliance Description", description = "Appliance Description")
 })
-@Reference(name = AbstractFireAppliance.ROOM_REFERENCE_NAME, referenceInterface = RoomEnvironment.class,
-        cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, policy = ReferencePolicy.DYNAMIC, strategy = ReferenceStrategy.LOOKUP)
 public abstract class AbstractFireAppliance implements FireAppliance {
     private static final Logger LOG = LoggerFactory.getLogger(AbstractFireAppliance.class);
 
     public static final String ROOM_REFERENCE_NAME = "room.reference";
 
+    @Reference(name = AbstractFireAppliance.ROOM_REFERENCE_NAME, referenceInterface = RoomEnvironment.class,
+            cardinality = ReferenceCardinality.MANDATORY_MULTIPLE, policy = ReferencePolicy.DYNAMIC,
+            bind = "bindRoom", unbind = "unbindRoom")
+    private Map<String, RoomEnvironment> rooms = new HashMap<String, RoomEnvironment>();
+
     protected boolean activated;
-    protected ComponentContext ctx;
+
+    protected String description;
+    protected String applianceId;
+    protected String roomId;
 
     @Activate
     protected void activate(ComponentContext ctx) {
-        this.ctx = ctx;
+        readProperties(ctx);
+    }
+
+    private void readProperties(ComponentContext ctx) {
+        description = (String) ctx.getProperties().get(Constants.DESCRIPTION_PROP);
+        applianceId = String.valueOf(ctx.getProperties().get(ComponentConstants.COMPONENT_ID));
+        roomId = (String) ctx.getProperties().get(Constants.ROOM_ID_PROP);
     }
 
     @Deactivate
     protected void deactivate(ComponentContext ctx) {
-        this.ctx = null;
+    }
+
+    @Modified
+    protected void modified(ComponentContext ctx) {
+        readProperties(ctx);
     }
 
     @Override
     public boolean isActivated() {
         return activated;
+    }
+
+    protected void bindRoom(RoomEnvironment room, Map<String, Object> props) {
+        rooms.put((String) props.get(Constants.ROOM_ID_PROP), room);
+    }
+
+    protected void unbindRoom(RoomEnvironment room, Map<String, Object> props) {
+        rooms.remove(props.get(Constants.ROOM_ID_PROP));
     }
 
     /**
@@ -48,16 +74,10 @@ public abstract class AbstractFireAppliance implements FireAppliance {
      * @return room
      */
     protected RoomEnvironment getRoom() {
-        try {
-            ServiceReference[] serviceReferences = ctx.getBundleContext().getServiceReferences(RoomEnvironment.class.getName(), String.format("(%s=%s)", Constants.ROOM_ID_PROP, ctx.getProperties().get(Constants.ROOM_ID_PROP)));
-            if (serviceReferences != null && serviceReferences.length == 1) {
-                // Equinos DS returns null!!!. Felix works fine
-                // return (RoomEnvironment) ctx.locateService(ROOM_REFERENCE_NAME, serviceReferences[0]);
-                return (RoomEnvironment) ctx.getBundleContext().getService(serviceReferences[0]);
-            }
-        } catch (InvalidSyntaxException e) {
-            LOG.warn("Invalid filter", e);
+        RoomEnvironment applianceRoom = rooms.get(roomId);
+        if (applianceRoom == null) {
+            LOG.warn(String.format("Room: %s is not available yet%n", roomId));
         }
-        return null;
+        return applianceRoom;
     }
 }

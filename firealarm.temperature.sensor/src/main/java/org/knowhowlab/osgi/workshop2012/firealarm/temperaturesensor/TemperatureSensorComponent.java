@@ -23,10 +23,12 @@ import java.util.concurrent.TimeUnit;
 public class TemperatureSensorComponent extends AbstractSensorAppliance implements FireAppliance {
     public static final String TEMPERATURE_LIMIT_PROP = "temperature.limit";
     private ScheduledExecutorService executorService;
+    protected Float temperatureLimit;
 
     @Override
     protected void activate(ComponentContext ctx) {
         super.activate(ctx);
+        temperatureLimit = Float.valueOf((String) ctx.getProperties().get(TEMPERATURE_LIMIT_PROP));
         executorService = Executors.newScheduledThreadPool(1);
         executorService.scheduleWithFixedDelay(new CheckEnvironmentStatusRunnable(), 1, 1, TimeUnit.SECONDS);
     }
@@ -39,15 +41,25 @@ public class TemperatureSensorComponent extends AbstractSensorAppliance implemen
         super.deactivate(ctx);
     }
 
+    @Override
+    protected void modified(ComponentContext ctx) {
+        super.modified(ctx);
+        temperatureLimit = Float.valueOf((String) ctx.getProperties().get(TEMPERATURE_LIMIT_PROP));
+    }
+
     private class CheckEnvironmentStatusRunnable implements Runnable {
         @Override
         public void run() {
-            float currentTemperature = getRoom().getCurrentTemperature();
-            boolean limitCrossed = (currentTemperature >= Float.valueOf((String) ctx.getProperties().get(TEMPERATURE_LIMIT_PROP)));
-            if (limitCrossed && !activated) {
-                activateAlarm(String.format("Temp: %sC", currentTemperature));
-            } else if (activated && !limitCrossed) {
-                deactivateAlarm();
+            try {
+                float currentTemperature = getRoom().getCurrentTemperature();
+                boolean limitCrossed = (currentTemperature >= temperatureLimit);
+                if (limitCrossed && !activated) {
+                    activateAlarm(String.format("Temp: %sC", currentTemperature));
+                } else if (activated && !limitCrossed) {
+                    deactivateAlarm();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

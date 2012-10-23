@@ -38,11 +38,15 @@ public class FogSensorComponent extends AbstractSensorAppliance implements FireA
     private class CheckEnvironmentStatusRunnable implements Runnable {
         @Override
         public void run() {
-            boolean hasFog = getRoom().hasFog();
-            if (hasFog && !activated) {
-                activateAlarm(null);
-            } else if (activated && !hasFog) {
-                deactivateAlarm();
+            try {
+                boolean hasFog = getRoom().hasFog();
+                if (hasFog && !activated) {
+                    activateAlarm(null);
+                } else if (activated && !hasFog) {
+                    deactivateAlarm();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }

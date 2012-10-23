@@ -49,8 +49,12 @@ public class SprinklerComponent extends AbstractFireAppliance implements ActionA
     private class ExtinguishRunnable implements Runnable {
         @Override
         public void run() {
-            if (activated) {
-                getRoom().extinguish();
+            try {
+                if (activated) {
+                    getRoom().extinguish();
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
