@@ -5,7 +5,7 @@ import org.junit.Test;
 /**
  * @author dpishchukhin
  */
-public class CoreComponentTest {
+public class FireAlarmSystemComponentTest {
     @Test
     public void testHandleEvent() throws Exception {
         // TODO with mockito

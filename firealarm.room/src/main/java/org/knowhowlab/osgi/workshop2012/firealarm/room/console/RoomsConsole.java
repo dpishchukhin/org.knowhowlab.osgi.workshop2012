@@ -18,7 +18,7 @@ import java.util.Map;
 @Service(RoomsConsole.class)
 @Properties({
         @Property(name = CommandProcessor.COMMAND_SCOPE, value = "firealarm"),
-        @Property(name = CommandProcessor.COMMAND_FUNCTION, value = {"lr", "chroom"})
+        @Property(name = CommandProcessor.COMMAND_FUNCTION, value = {"lr", "fire"})
 })
 public class RoomsConsole {
     @Reference(referenceInterface = RoomEnvironment.class,
@@ -34,11 +34,10 @@ public class RoomsConsole {
         }
     }
 
-    @Descriptor("change room environment")
-    public void chroom(
+    @Descriptor("emulate fire in a room")
+    public void fire(
             @Descriptor("room id") @Parameter(names = {"-r", "--room"}, absentValue = Parameter.UNSPECIFIED) String roomId,
-            @Descriptor("activate fog") @Parameter(names = {"-f", "--fog"}, presentValue = "true", absentValue = Parameter.UNSPECIFIED) boolean fog,
-            @Descriptor("activate fog") @Parameter(names = {"-t", "--temp"}, absentValue = Parameter.UNSPECIFIED) float temp
+            @Descriptor("activate fog") @Parameter(names = {"-f", "--fog"}, presentValue = "true", absentValue = Parameter.UNSPECIFIED) boolean fog
     ) {
         RoomEnvironment room = rooms.get(roomId);
         if (room == null) {
@@ -48,7 +47,7 @@ public class RoomsConsole {
         } else {
             RoomEnvironmentManipulator manipulator = (RoomEnvironmentManipulator) room;
             manipulator.activateFog(fog);
-            manipulator.setActualTemperature(temp);
+            manipulator.setActualTemperature(100);
             System.out.println("Env changed for room ID: " + roomId);
         }
     }
