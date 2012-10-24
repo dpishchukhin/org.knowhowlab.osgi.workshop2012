@@ -30,8 +30,8 @@ public class BaseTest {
                 cleanCaches(true),
                 junitBundles(),
 
-                customFramework("felix", "file:" + System.getProperty("root.basedir") + "/platform-firealarm-felix.xml", "felix 4.0.3"),
-                customFramework("equinox", "file:" + System.getProperty("root.basedir") + "/platform-firealarm-equinox-noconsole.xml", "equinox 3.8.1"),
+                customFramework("felix", "file:" + System.getProperty("root.basedir") + "/platform-firealarm-felix-it.xml", "felix 4.0.3"),
+                customFramework("equinox", "file:" + System.getProperty("root.basedir") + "/platform-firealarm-equinox-it.xml", "equinox 3.8.1"),
 
                 mavenBundle("org.knowhowlab.osgi.testing", "utils").versionAsInProject(),
                 mavenBundle("org.knowhowlab.osgi.testing", "assertions").versionAsInProject(),
