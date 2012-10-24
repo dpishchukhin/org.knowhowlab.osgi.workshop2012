@@ -33,8 +33,8 @@ public class BaseTest {
                 customFramework("felix", "file:" + System.getProperty("root.basedir") + "/platform-firealarm-felix-it.xml", "felix 4.0.3"),
                 customFramework("equinox", "file:" + System.getProperty("root.basedir") + "/platform-firealarm-equinox-it.xml", "equinox 3.8.1"),
 
-                mavenBundle("org.knowhowlab.osgi.testing", "utils").versionAsInProject(),
-                mavenBundle("org.knowhowlab.osgi.testing", "assertions").versionAsInProject(),
+                mavenBundle("org.knowhowlab.osgi", "org.knowhowlab.osgi.testing.utils").versionAsInProject(),
+                mavenBundle("org.knowhowlab.osgi", "org.knowhowlab.osgi.testing.assertions").versionAsInProject(),
 
                 mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.api").version(System.getProperty("project.version")),
                 mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.room").version(System.getProperty("project.version")),
