@@ -11,9 +11,9 @@
     </parent>
 
     <groupId>org.knowhowlab.osgi.workshop2012</groupId>
-    <artifactId>firealarm.fog.sensor</artifactId>
+    <artifactId>firealarm.smoke.sensor</artifactId>
     <packaging>bundle</packaging>
-    <name>Fire Alarm - Fog Sensor Component</name>
+    <name>Fire Alarm - Smoke Sensor Component</name>
 
     <dependencies>
         <dependency>

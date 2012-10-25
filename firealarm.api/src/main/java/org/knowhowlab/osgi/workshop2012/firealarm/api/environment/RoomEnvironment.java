@@ -7,10 +7,10 @@ package org.knowhowlab.osgi.workshop2012.firealarm.api.environment;
  */
 public interface RoomEnvironment {
     /**
-     * Is there fog in the room
+     * Is there smoke in the room
      * @return <code>true</code> or <code>false</code>
      */
-    boolean hasFog();
+    boolean hasSmoke();
 
     /**
      * Get current temperature in the room

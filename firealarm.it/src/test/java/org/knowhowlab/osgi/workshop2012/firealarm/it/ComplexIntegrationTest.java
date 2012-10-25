@@ -46,12 +46,12 @@ public class ComplexIntegrationTest extends BaseTest {
         createRoom(ROOM_ID2, "Room: " + ROOM_ID2);
         ServiceAssert.assertServiceAvailable(and(create(RoomEnvironment.class), eq(ROOM_ID_PROP, ROOM_ID2)), 5, TimeUnit.SECONDS);
 
-        // add fog sensor to room 1
-        createFogSensor(ROOM_ID1, "Fog Sensor for Room: " + ROOM_ID1);
+        // add smoke sensor to room 1
+        createFogSensor(ROOM_ID1, "Smoke Sensor for Room: " + ROOM_ID1);
         ServiceAssert.assertServiceAvailable(and(create(FireAppliance.class), eq(ROOM_ID_PROP, ROOM_ID1)), 5, TimeUnit.SECONDS);
 
-        // add fog sensor to room 2
-        createFogSensor(ROOM_ID2, "Fog Sensor for Room: " + ROOM_ID2);
+        // add smoke sensor to room 2
+        createFogSensor(ROOM_ID2, "Smoke Sensor for Room: " + ROOM_ID2);
         ServiceAssert.assertServiceAvailable(and(create(FireAppliance.class), eq(ROOM_ID_PROP, ROOM_ID2)), 5, TimeUnit.SECONDS);
 
         // add lamp to room 1
@@ -68,7 +68,7 @@ public class ComplexIntegrationTest extends BaseTest {
 
         // emulate fire in room 1
         RoomEnvironmentManipulator room1 = ServiceUtils.getService(bundleContext, RoomEnvironmentManipulator.class, eq(ROOM_ID_PROP, ROOM_ID1));
-        room1.activateFog(true);
+        room1.activateSmoke(true);
         room1.setActualTemperature(100);
 
         // wait a little
@@ -110,7 +110,7 @@ public class ComplexIntegrationTest extends BaseTest {
             ServiceReference serviceReference = ServiceUtils.getServiceReference(bundleContext, ConfigurationAdmin.class);
             ConfigurationAdmin configurationAdmin = (ConfigurationAdmin) bundleContext.getService(serviceReference);
             try {
-                org.osgi.service.cm.Configuration configuration = configurationAdmin.createFactoryConfiguration("firealarm.fog.sensor", null);
+                org.osgi.service.cm.Configuration configuration = configurationAdmin.createFactoryConfiguration("firealarm.smoke.sensor", null);
                 Hashtable<String, String> props = new Hashtable<String, String>();
                 props.put(ROOM_ID_PROP, roomId);
                 props.put(DESCRIPTION_PROP, description);

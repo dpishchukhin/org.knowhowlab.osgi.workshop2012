@@ -14,10 +14,10 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author dpishchukhin
  */
-@Component(specVersion = "1.1", name = "firealarm.fog.sensor", label = "Fog Sensor", description = "Fog Sensor",
+@Component(specVersion = "1.1", name = "firealarm.smoke.sensor", label = "Smoke Sensor", description = "Smoke Sensor",
         metatype = true, configurationFactory = true, policy = ConfigurationPolicy.REQUIRE, immediate = true)
 @Service(FireAppliance.class)
-public class FogSensorComponent extends AbstractSensorAppliance implements FireAppliance {
+public class SmokeSensorComponent extends AbstractSensorAppliance implements FireAppliance {
     private ScheduledExecutorService executorService;
 
     @Override
@@ -39,7 +39,7 @@ public class FogSensorComponent extends AbstractSensorAppliance implements FireA
         @Override
         public void run() {
             try {
-                boolean hasFog = getRoom().hasFog();
+                boolean hasFog = getRoom().hasSmoke();
                 if (hasFog && !activated) {
                     activateAlarm(null);
                 } else if (activated && !hasFog) {

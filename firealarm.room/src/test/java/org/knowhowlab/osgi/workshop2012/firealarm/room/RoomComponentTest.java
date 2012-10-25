@@ -19,9 +19,9 @@ public class RoomComponentTest {
     public void testExtinguish_fog() throws Exception {
         RoomComponent component = new RoomComponent();
         component.setActualTemperature(RoomComponent.MINIMUM_TEMP);
-        component.activateFog(true);
+        component.activateSmoke(true);
         component.extinguish();
         Assert.assertEquals(RoomComponent.MINIMUM_TEMP, component.getCurrentTemperature(), 0);
-        Assert.assertEquals(false, component.hasFog());
+        Assert.assertEquals(false, component.hasSmoke());
     }
 }

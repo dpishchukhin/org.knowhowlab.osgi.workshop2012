@@ -18,12 +18,12 @@ import org.knowhowlab.osgi.workshop2012.firealarm.api.environment.RoomEnvironmen
 public class RoomComponent implements RoomEnvironmentManipulator {
     public static final float MINIMUM_TEMP = 20;
 
-    private boolean fog;
+    private boolean smoke;
     private float actualTemperature = MINIMUM_TEMP;
 
     @Override
-    public boolean hasFog() {
-        return fog;
+    public boolean hasSmoke() {
+        return smoke;
     }
 
     @Override
@@ -35,14 +35,14 @@ public class RoomComponent implements RoomEnvironmentManipulator {
     public void extinguish() {
         if (actualTemperature > MINIMUM_TEMP) {
             actualTemperature--;
-        } else if (fog) {
-            fog = false;
+        } else if (smoke) {
+            smoke = false;
         }
     }
 
     @Override
-    public void activateFog(boolean activate) {
-        this.fog = activate;
+    public void activateSmoke(boolean activate) {
+        this.smoke = activate;
     }
 
     @Override

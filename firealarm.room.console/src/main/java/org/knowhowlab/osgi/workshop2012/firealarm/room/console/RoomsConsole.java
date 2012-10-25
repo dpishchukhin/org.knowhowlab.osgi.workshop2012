@@ -30,20 +30,20 @@ public class RoomsConsole {
     public void lr() {
         for (String roomId : rooms.keySet()) {
             RoomEnvironment env = rooms.get(roomId);
-            System.out.println(String.format("Room %s - fog: %s, temp: %sC", roomId, env.hasFog(), env.getCurrentTemperature()));
+            System.out.println(String.format("Room %s - smoke: %s, temp: %sC", roomId, env.hasSmoke(), env.getCurrentTemperature()));
         }
     }
 
     @Descriptor("emulate fire in a room")
     public void fire(
             @Descriptor("room id") @Parameter(names = {"-r", "--room"}, absentValue = Parameter.UNSPECIFIED) String roomId,
-            @Descriptor("activate fog") @Parameter(names = {"-f", "--fog"}, presentValue = "true", absentValue = Parameter.UNSPECIFIED) boolean fog
+            @Descriptor("activate smoke") @Parameter(names = {"-s", "--smoke"}, presentValue = "true", absentValue = Parameter.UNSPECIFIED) boolean smoke
     ) {
         RoomEnvironmentManipulator room = rooms.get(roomId);
         if (room == null) {
             System.out.println("Unknown room ID: " + roomId);
         } else {
-            room.activateFog(fog);
+            room.activateSmoke(smoke);
             room.setActualTemperature(100);
             System.out.println("Env changed for room ID: " + roomId);
         }

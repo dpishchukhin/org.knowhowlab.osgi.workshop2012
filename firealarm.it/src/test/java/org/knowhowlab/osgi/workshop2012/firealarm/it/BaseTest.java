@@ -40,7 +40,7 @@ public class BaseTest {
                 mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.room").version(System.getProperty("project.version")),
                 mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.lamp").version(System.getProperty("project.version")),
                 mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.sprinkler").version(System.getProperty("project.version")),
-                mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.fog.sensor").version(System.getProperty("project.version")),
+                mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.smoke.sensor").version(System.getProperty("project.version")),
                 mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.temperature.sensor").version(System.getProperty("project.version")),
                 mavenBundle("org.knowhowlab.osgi.workshop2012", "firealarm.core").version(System.getProperty("project.version"))
         );
